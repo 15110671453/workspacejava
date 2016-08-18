@@ -1,0 +1,98 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.bjcric</groupId>
+  <artifactId>maven</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>mavenproject</name>
+  <description>maven</description>
+  
+  	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.3.6.RELEASE</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.8</java.version>
+	</properties>
+
+<dependencies>
+			<dependency>
+            <groupId>org.springframework.boot</groupId>
+          	<artifactId>spring-boot-starter</artifactId>
+          	<exclusions>
+          		 <exclusion>
+            		<groupId>org.springframework.boot</groupId>
+            		<artifactId>spring-boot-starter-logging</artifactId>
+           		 </exclusion>
+            	</exclusions>  
+                </dependency>
+        <!-- 排除logback的日志配置 采用log4j版本的日志配置 -->
+        <dependency>
+        	<groupId>org.springframework.boot</groupId>
+        	<artifactId>spring-boot-starter-log4j</artifactId>
+        </dependency>
+     <!--    start web模块支持内嵌tomcat jetty undertow轻松创建http 服务器 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+     <dependency>
+            <groupId>com.jayway.jsonpath</groupId>
+            <artifactId>json-path</artifactId>
+            <scope>test</scope>
+        </dependency>
+    <!--     只要classpath下存在Jackson2
+        任何spring@RestController默认被渲染为json响应 -->
+            <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+        <!-- 提供springboot所有的productionready特性 启用该特性只需添加依赖 -->
+          <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+          <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+        </dependency>
+        <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-context</artifactId>
+    <!--     支持使用 JDBC 访问数据库。 -->
+    </dependency>
+          <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+        </dependency>
+     <!--    模版引擎 -->
+            <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+       		 </dependency>
+      		  <dependency>
+          	  <groupId>org.springframework.boot</groupId>
+           	 <artifactId>spring-boot-devtools</artifactId>
+            	<optional>true</optional>
+       		 </dependency>
+       <!--  内嵌服务器 -->
+        <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-tomcat</artifactId>
+      </dependency>
+</dependencies>
+<build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+	
+  
+</project>

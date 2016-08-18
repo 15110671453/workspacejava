@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!-- <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd"> -->
+<beans xmlns="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+    xmlns:context="http://www.springframework.org/schema/context"  
+    xmlns:aop="http://www.springframework.org/schema/aop"  
+    xmlns:tx="http://www.springframework.org/schema/tx"  
+    xsi:schemaLocation="http://www.springframework.org/schema/beans  
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd  
+           http://www.springframework.org/schema/context  
+           http://www.springframework.org/schema/context/spring-context-2.5.xsd  
+           http://www.springframework.org/schema/aop  
+           http://www.springframework.org/schema/aop/spring-aop-2.5.xsd  
+           http://www.springframework.org/schema/tx   
+           http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+         <!--   beans.xml要放在src同级目录  -->
+      <!--  xml文件可以实现一个bean依赖另一个bean 但是属性文件不可以 -->
+         <!--   spring 中不需要实例化 spring中看到new就不太好了 不过其实无所谓 实现功能重要  -->
+   <bean id = "HelloBean" class="com.bjrcic.servlettest.HelloBean">
+   <property name = "nameTest" value= "dynbeantest1"/>
+   </bean>
+   <bean id = "usbdisk" class="com.bjrcic.servlettest.UsbEntity"></bean>
+   <bean id = "movedisk" class="com.bjrcic.servlettest.MoveDisk"></bean>
+ 
+   <bean id = "computer" class="com.bjrcic.servlettest.Computer">
+   	<property name = "usbjiekou" ref ="usbdisk" />
+   </bean>
+   
+   <bean id = "conn" class = "com.bjrcic.test2.ConnectionUtil">
+     <property name = "username" value= "root"/>
+        <property name = "password" value= "dyn123456"/>
+           <property name = "url" value="jdbc:mysql://127.0.0.1:3306/jdbc_db"/>
+           <property name = "driver" value="com.mysql.jdbc.Driver"/>
+   </bean>
+   <bean id = "userDao" class = "com.bjrcic.test2.UserDaoImpl">
+   <property name = "util" ref = "conn"></property>
+   </bean>
+   <!-- bean中指明bean实例该类对象时 类的构造方法 指明不调用默认 调用自定义工厂 -->
+    <bean id = "test" class = "com.bjcric.springioc.Person" factory-method = "create"  >
+  
+   </bean>
+   <!--    为bean指定工厂类 -->
+ <bean id = "factory" class = "com.bjcric.springioc.PersonFactory"  >  </bean>
+ <bean id = "test2" class = "com.bjcric.springioc.Person" factory-bean = "factory" factory-method = "create"  >
+   </bean>
+<!--  该标记启用AOP支持 -->
+   <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+   
+</beans>  

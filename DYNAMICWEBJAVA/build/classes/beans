@@ -1,0 +1,83 @@
+Spring的beans
+容器是配置对象 实例对象 建立对象之间关系的东东
+IOC容器
+1、在java里的类 在spring都被称为bean 容器是用来读取bean的定义
+管理对象的初始化 和生产 以及对象之间的依赖
+2、IOC容器的具体实现 两个类BeanFactory ApplicationContext
+在spring当中IOC容器是由BeanFactory和ApplicationContext这两个
+接口来实现的
+ApplicationContext接口继承BeanFactory除了具有BeanFactory的功能之外
+还有如下功能 资源访问 对国际化的支持 对事件的支持
+
+BeanFactory常用方法
+getBean 根据bean标识获得bean实例
+getbean 根据bean标识获得bean实例 并转换为指定的类型
+containsBean 判断beanfactory中是否有该bean
+isSingleton 判断bean的scope是否是singleton
+getType 获得当前bean的类型
+getAliases 获得bean的别名
+
+BeanFactory的实现类
+最常使用的是XmlBeanFactory
+BeanFactory 的实例化
+先拿到资源配置文件 这里的beans.xml位置路径与src同级
+Resource resource = new FileSystemResource("Beans.xml");
+实例bean工厂
+BeanFactory factory = new XmlBeanFactory(r);
+让bean工厂不调用默认的类构造方法 调用自定义工厂方法
+
+ClassPathResource resource = new ClassPathResource("Beans.xml");
+BeanFactory factory = new XmlBeanFactory(resource);
+
+ApplicationContext实现类
+ClassPathXmlApplicationContext（常用）
+FileSystemXmlApplicationContext
+XmlWebApplicationContext
+这里的beans.xml文件的位置路径在 包路径下（同级）需注意
+ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
+HelloBean bean = (HelloBean)context.getBean("Hellobean");
+ApplicationContext context = new ClassPathXmlApplicationContext(new String[]{"beans1.xml","beans2.xml"});
+使用file:/ classpath: http://等URL前缀
+ApplicationContext context = new ClassPathXmlApplicationContext("classpath*:beans.xml")
+
+Bean的Scope
+java中的单例
+spring中bean返回的实例对象的生命周期 默认是单例的 改为非单例 scope 或 singleton = "true"或者 "false"
+还有针对request的生命周期配置
+session  ？？等等 还需详细学习
+
+beans依赖注入
+第一 设置注入  对应的beans中必须有对应的set方法实现
+beans中 属性的name 对应的是有一个叫name的名字的set方法的实现 才可以；
+第二 构造方法注入;
+第三 依赖注入的属性设置
+bean的property
+   <bean id = "userDao" class = "com.bjrcic.test2.UserDaoImpl">
+   <property name = "util" ><null/>
+   </bean>
+第四 依赖中引用属性的使用 ref 用来将bean中指定属性的值设置为对容器中另外一个bean的引用
+   <bean id = "userDao" class = "com.bjrcic.test2.UserDaoImpl">
+   <property name = "util" > <ref bean="someBean"/></property>
+   </bean>
+第五 集合对象的属性
+通过<list/>   <set/> <map/> 及 <props/>元素可以定义和设置
+与java collection类型对应List Set Map 及Properties的值
+数组和List
+<property name = "someList">
+<list>
+<value> a list element followed by a refrence</value>
+<ref bean ="mydatasource"/>
+</list>
+</property>
+Set
+<property name = "someSet">
+<set>
+<value> a list element followed by a refrence</value>
+<ref bean ="mydatasource"/>
+</set>
+</property>
+   
+
+
+
+

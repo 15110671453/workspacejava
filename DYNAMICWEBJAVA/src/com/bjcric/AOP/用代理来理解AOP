@@ -1,0 +1,110 @@
+用代理来理解AOP
+静态代理只能代理一个类
+静态代理中 代理对象与被代理对象必须实现同一个接口 静态代理弊端 一个代理接口只服务于一种类型的对像
+
+动态代理 使用动态代理可以实现java中的java.lang.reflect.invocationHandler接口
+该接口的一个方法是
+public Object invoke (Object proxy,Method method,Object[] args );
+proxy 代理对象 method 代理关联的方法 args 方法参数
+实例代码
+UserDao
+public interface UserDao
+{
+		public void delete(String userName);
+}
+UserDaoImpl
+public class UserDaoImpl implements UserDao
+{
+		public void delete(String userName)
+		{
+			System.out.println("删除成功");
+		}
+}
+动态代理
+实例代码
+UserProxy
+public class UserProxy implements InvocationHandler
+{
+     Logger logger = Logger.getlogger(this.getClasss().getName());
+     Object delegate;
+     public Object bind(Object delegate)
+     {
+     	this.delegate = delegate;
+     	return Proxy.newProxyInstance(
+     	delegate.getClass().getClassLoader(),delegate.getClass().getClassInterface(),this);
+     }
+     public Object invoke(Object proxy,Method method,Object[]args)throws Throwable
+     {
+     System.out.println("proxy:"+proxy.getClass().getName);
+     System.out.println("method:"+method.getName);
+     if(args.length>0)
+     {
+     for (int i = 0, i<args.length, i++)
+     {
+     	System.out.println('arg['+i+']:'+args[i]);
+     }
+     Object obj = method.invoke(delegate,args);
+     String log = "方法 ："+method.getName()+"被" +args[0]+"执行！";
+     
+     logger.log(Level.INFO,log);
+     return obj;
+     }
+     
+     }
+}
+
+
+以上是SpringAOP实现的API 纯代码方式
+ 第二种 SpringAOP实现Anonotion实现
+ @AspectJ简介 SpringAOP借鉴第三方的AspectJ实现的
+ 使用注意点：
+ 启用@AspectJ支持
+ 声明一个切面
+ 声明一个切入点(pointcut)
+ 切入点简介
+ 切入点的匹配表达式
+ execution pointcut  表达式
+ 示例
+声明通知
+before advice
+after advice
+around advice
+Throwing advice
+
+使用Spring的版本必须是2.0以上 jdk版本5.0以上 才能启用AspectJ的支持
+ spring.jar包不够用
+ 还需要的Spring的jar包
+ 
+ 一般可以用Spring的API方式实现 AOP
+  <bean id = "userdao" class="com.bjcric.AOPAPI.UserDaoImpl">
+   </bean>
+    <bean id = "logadvice" class="com.bjcric.AOPAPI.LoggingAdvice">
+   </bean>
+     <bean id = "afteradvice" class="com.bjcric.AOPAPI.LoggingAdviceAfter">
+   </bean>
+     <bean id = "aroundadvice" class="com.bjcric.AOPAPI.AdviceAround">
+   </bean>
+   <!--   要实现的接口 --> 
+    <bean id = "factory" class="org.springframework.aop.framework.ProxyFactory">
+
+     <property name = "proxyInterfaces" value ="com.bjcric.AOPAPI.UserDao"></property>
+      <property name = "target" ref ="userdao"></property>
+       <property name = "interceptorNames" >
+       		<list>
+       			<value>logadvice</value>
+       			<value>afteradvice</value>
+       			<value>aroundadvice</value>
+       		</list>
+       
+       </property>
+   		</bean>
+ 高级的用Spring Annontation实现
+ <!--  该标记启用AOP支持 用注释或xml方式 -->
+   <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+ 如果你不想用java5 可以用基于xml配置文件的方式实现xml
+ <!--  该标记启用AOP支持 用注释或xml方式 -->
+   <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+ 
+ 
+
+

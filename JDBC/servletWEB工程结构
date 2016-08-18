@@ -1,0 +1,35 @@
+前言：
+http 请求响应机制 超文本传输协议
+CUI DataBaseServer;
+B/S程序以的结构以不同的目录来组织和管理，程序只需要部署到支持
+该web程序的容器中即可运行
+第一：web应用程序的思想
+servelets JSP页面 HTML文件 工具类 javabean 标签库 被放到
+一个不同层次结构的目录里；
+web 应用程序使用有公共前缀的URL来访问web应用程序上下文（webcontext）应用程序的作用域；
+web 应用程序的很多行为，都是由部署描述符控制的（web.xml）；
+servelet welcomlist listener；
+不同的目录结构来组织HTML文件，JSP页面，servlet容器，beans，图片；
+每一个web应用程序有自己的 ：
+servlet上下文 ；
+类加载器classloader； 
+会话 sessions；
+URL前缀 ；
+目录结构；
+一个tomcat服务器可以配置多少个应用程序呢！！！；
+第二：web工程结构
+应用程序名文件夹主目录；
+关键目录一：自定义文件夹名，放置jsp或常规web内容 jsp html css 放到主目录或其子目录下；
+关键目录二：WEB-INF下放置 
+classes（packages 自己的java文件）；
+lib（数据库驱动）；
+tlds（标签库描述文件）；
+web-inf下的文件不能由客户端直接访问 url地址栏直接访问 
+需要requestdispacher转发供用户访问。
+web工程中最重要的文件是web.xml web工程首先读取该文件的配置信息；
+关键目录三：META-INF
+
+
+关键 jar命令打包jar
+手动按照web工程结构构建的工程使用 jar命令
+打包，放置到tomcat下（tomcat的webapps目录下就可以）tomcat启动，url地址栏访问就可以；

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!-- <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd"> -->
+<beans xmlns="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+    xmlns:context="http://www.springframework.org/schema/context"  
+    xmlns:aop="http://www.springframework.org/schema/aop"  
+    xmlns:tx="http://www.springframework.org/schema/tx"  
+    xsi:schemaLocation="http://www.springframework.org/schema/beans  
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd  
+           http://www.springframework.org/schema/context  
+           http://www.springframework.org/schema/context/spring-context-2.5.xsd  
+           http://www.springframework.org/schema/aop  
+           http://www.springframework.org/schema/aop/spring-aop-2.5.xsd  
+           http://www.springframework.org/schema/tx   
+           http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+         <!--   beans.xml要放在src同级目录  -->
+      <!--  xml文件可以实现一个bean依赖另一个bean 但是属性文件不可以 -->
+         <!--   spring 中不需要实例化 spring中看到new就不太好了 不过其实无所谓 实现功能重要  -->
+   <bean id = "userdao" class="com.bjcric.AOPAPI.UserDaoImpl">
+   </bean>
+    <bean id = "logadvice" class="com.bjcric.AOPAPI.LoggingAdvice">
+   </bean>
+     <bean id = "afteradvice" class="com.bjcric.AOPAPI.LoggingAdviceAfter">
+   </bean>
+     <bean id = "aroundadvice" class="com.bjcric.AOPAPI.AdviceAround">
+   </bean>
+   <!--   要实现的接口 --> 
+    <bean id = "factory" class="org.springframework.aop.framework.ProxyFactory">
+
+     <property name = "proxyInterfaces" value ="com.bjcric.AOPAPI.UserDao"></property>
+      <property name = "target" ref ="userdao"></property>
+       <property name = "interceptorNames" >
+       		<list>
+       			<value>logadvice</value>
+       			<value>afteradvice</value>
+       			<value>aroundadvice</value>
+       		</list>
+       
+       </property>
+   		</bean>
+
+<!--  该标记启用AOP支持 用注释或xml方式 -->
+   <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+   
+</beans> 

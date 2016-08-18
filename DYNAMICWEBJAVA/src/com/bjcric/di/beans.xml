@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!-- <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd"> -->
+<beans xmlns="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+    xmlns:context="http://www.springframework.org/schema/context"  
+    xmlns:aop="http://www.springframework.org/schema/aop"  
+    xmlns:tx="http://www.springframework.org/schema/tx"  
+    xsi:schemaLocation="http://www.springframework.org/schema/beans  
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd  
+           http://www.springframework.org/schema/context  
+           http://www.springframework.org/schema/context/spring-context-2.5.xsd  
+           http://www.springframework.org/schema/aop  
+           http://www.springframework.org/schema/aop/spring-aop-2.5.xsd  
+           http://www.springframework.org/schema/tx   
+           http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+         <!--   beans.xml要放在src同级目录  -->
+      <!--  xml文件可以实现一个bean依赖另一个bean 但是属性文件不可以 -->
+         <!--   spring 中不需要实例化 spring中看到new就不太好了 不过其实无所谓 实现功能重要  -->
+   <bean id = "dog" class="com.bjcric.di.Dog">
+  
+   </bean>
+   <bean id = "snake" class="com.bjcric.di.Snake">
+  
+   </bean>
+   <bean id = "per" class="com.bjcric.di.Person">
+   	<property name = "pets" ref ="dog" />
+   </bean>
+     <bean id = "user" class="com.bjcric.di.User">
+    <!--  构造方法注入 对应的类中必须有对应的构造方法的实现 -->
+    <constructor-arg value ="30" type= "java.lang.integer" index ="0"/>
+   </bean>
+    <bean id = "list" class = "com.bjcric.di.TestList">
+    <property name = "list">
+		<list>
+			<value> a list element followed by a refrence</value>
+			<value> a list element followed by a refrence2</value>
+			<value> a list element followed by a refrence3</value>
+		</list>
+	</property>
+	<property name = "set">
+	<set>
+	<value> a list element followed by a refrence</value>
+	<value> a list element followed by a refrence22</value>
+	<value> a list element followed by a refrence33</value>
+	</set>
+	</property>
+		<property name = "map">
+	<map>
+	  <entry>
+	  	<key> 
+	  		<value>1</value>
+	  	</key>
+	  	<value>one</value>
+	  </entry>
+	    <entry>
+	  	<key> 
+	  		<value>2</value>
+	  	</key>
+	  	<value>two</value>
+	  </entry>
+	</map>
+	</property>
+    </bean>
+   
+ 
+   
+   
+</beans>  
